@@ -4,7 +4,7 @@ import "flatpickr/dist/flatpickr.min.css";
 const buttonStart = document.querySelector('button');
 buttonStart.setAttribute("disabled", true);
 let countDown = null;
-
+let deltaTime;
 
 const options = {
     enableTime: true,
@@ -28,9 +28,9 @@ const options = {
           intervalId = setInterval(() => {
             const currentDate = Date.now();
             const deltaTime = startDate - currentDate;
-            console.log(deltaTime);
+            
             const countDown = convertMs(deltaTime);
-            console.log(countDown);
+            // console.log(countDown);
           }, 1000);
         }
       }else {
@@ -38,16 +38,15 @@ window.alert("Please choose a date in the future");
       }  
     },
   };
+
+  console.log(deltaTime);
+  console.log(countDown);
 function stopTimer(deltaTime){
  if (deltaTime <= 0){
 clearInterval(intervalId);
 }
 };
-function updateTimer({ days, hours, minutes, seconds }) {
-const textSeconds = document.querySelector('span[data-seconds]');
-        
-textSeconds.textContent = `${countDown[seconds]}` ;
-}
+
 
  const calendar = flatpickr("#datetime-picker", options);
 
@@ -83,7 +82,10 @@ function addLeadingZero(value) {
     // timerDesign.style.marginRight = "20px";
     timerDesign.style.padding = "20px";
 
-
+    function updateTimer({ days, hours, minutes, seconds }) {
+      const textSeconds = document.querySelector('span[data-seconds]');
+      textSeconds.textContent = '${countDown[seconds]}' ;
+      }
 
 
 
