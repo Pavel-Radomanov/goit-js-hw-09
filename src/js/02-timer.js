@@ -3,14 +3,18 @@ import "flatpickr/dist/flatpickr.min.css";
 
 const buttonStart = document.querySelector('button');
 buttonStart.setAttribute("disabled", true);
-let countDown = null;
+let countDown;
 let deltaTime;
+
+
+
 
 const options = {
     enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,
+
     onClose(selectedDates) {
       let currentDate =  Date.now();
           console.log(currentDate);
@@ -29,8 +33,15 @@ const options = {
             const currentDate = Date.now();
             const deltaTime = startDate - currentDate;
             
-            const countDown = convertMs(deltaTime);
+            // const countDown = convertMs(deltaTime);
             // console.log(countDown);
+            console.log(deltaTime);
+            const {days, hours, minutes, seconds} = convertMs(deltaTime);
+
+            updateTimer({days, hours, minutes, seconds}) ;
+            console.log({days, hours, minutes, seconds});
+            
+            stopTimer(deltaTime);
           }, 1000);
         }
       }else {
@@ -39,18 +50,16 @@ window.alert("Please choose a date in the future");
     },
   };
 
-  console.log(deltaTime);
-  console.log(countDown);
+ 
 function stopTimer(deltaTime){
- if (deltaTime <= 0){
+ if (deltaTime < 1000){
 clearInterval(intervalId);
 }
 };
 
-
- const calendar = flatpickr("#datetime-picker", options);
-
- function convertMs(ms) {
+const calendar = flatpickr("#datetime-picker", options);
+ 
+function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
@@ -64,32 +73,36 @@ clearInterval(intervalId);
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
   const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
-
+  // console.log(seconds);
   return { days, hours, minutes, seconds };
-}
 
+}
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');}
 
-  
-
-    const timerDesign = document.querySelector(".timer");
-
-    timerDesign.style.color = "teal";
-    timerDesign.style.fontSize = "18px";
-    timerDesign.style.textAlign = "left";
-    // timerDesign.style.display = "flex";
-    // timerDesign.style.marginRight = "20px";
-    timerDesign.style.padding = "20px";
-
-    function updateTimer({ days, hours, minutes, seconds }) {
+    function updateTimer({days, hours, minutes, seconds}) {
       const textSeconds = document.querySelector('span[data-seconds]');
-      textSeconds.textContent = '${countDown[seconds]}' ;
+      const textMinutes = document.querySelector('span[data-minutes]');
+      const textHours = document.querySelector('span[data-hours]');
+      const textDays = document.querySelector('span[data-days]');
+      textSeconds.textContent = `${seconds}`;
+      textMinutes.textContent = `${minutes}`;
+      textHours.textContent = `${hours}`;
+      textDays.textContent = `${days}`;
       }
+      
+      
+      
+      // {days, hours, minutes, seconds}
+      // ${countDown[seconds]}
 
+      const timerDesign = document.querySelector(".timer");
 
-
-
+      timerDesign.style.color = "teal";
+      timerDesign.style.fontSize = "18px";
+      timerDesign.style.textAlign = "left";
+    
+      timerDesign.style.padding = "20px";
 
 
     // const textDays = document.querySelector('span[data-days]');
