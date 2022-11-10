@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
-// import notiflix/dist/notiflix-3.2.5.min.css;
+
+import 'notiflix/dist/notiflix-3.2.5.min.css'
 
 const form = document.querySelector(".form");
 
@@ -12,10 +13,10 @@ function createPromise(position, delay) {
     setTimeout(() => {
       if (shouldResolve) {
         resolve("Success! Value passed to resolve function");
-        console.log(`✅ Fulfilled promise ${position+1} in ${delay}ms`);
+        Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
       } else {
         reject("Error! Error passed to reject function");
-        console.log(`❌ Rejected promise ${position+1} in ${delay}ms`);
+        Notiflix.Notify.failure(`Rejected promise  ${position} in ${delay}ms`);
       }
     }, delay);
   })
@@ -34,14 +35,15 @@ function handleSubmit(event) {
   console.log(delay);
   console.log(position);
 
-  createPromise(position, delay) 
+createPromise(position, delay); 
 // .then(({position,delay}) => {
-//     Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);})
+//   // console.log("234");
+//     Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+//   })
 // .catch(({position,delay}) => {
 //     Notiflix.Notify.failure(`Rejected promise  ${position} in ${delay}ms`);})
 }
   };
-
 
 
 // const delayFirst = document.querySelector('input[name="delay"]');
