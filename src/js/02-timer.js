@@ -3,6 +3,8 @@ import "flatpickr/dist/flatpickr.min.css";
 
 const buttonStart = document.querySelector('button');
 buttonStart.setAttribute("disabled", true);
+const inputDate = document.querySelector('#datetime-picker');
+
 let countDown;
 let deltaTime;
 
@@ -23,18 +25,19 @@ const options = {
       console.log(startDate);
 
       if (currentDate < startDate){
-        console.log("Ok");
-        buttonStart.removeAttribute("disabled","disabled");
+        // console.log("Ok");
+        buttonStart.removeAttribute("disabled");
 
         buttonStart.addEventListener("click", onTimeStart);
         function onTimeStart() {
-  
+          inputDate.setAttribute("disabled", true);
+          buttonStart.setAttribute("disabled", true);
+
           intervalId = setInterval(() => {
+            
             const currentDate = Date.now();
             const deltaTime = startDate - currentDate;
-            
-            // const countDown = convertMs(deltaTime);
-            // console.log(countDown);
+          
             console.log(deltaTime);
             const {days, hours, minutes, seconds} = convertMs(deltaTime);
 
@@ -54,11 +57,15 @@ window.alert("Please choose a date in the future");
 function stopTimer(deltaTime){
  if (deltaTime < 1000){
 clearInterval(intervalId);
+buttonStart.removeAttribute("disabled");
+inputDate.removeAttribute("disabled");
+// buttonStart.removeAttribute("disabled","disabled");
 }
 };
 
 const calendar = flatpickr("#datetime-picker", options);
  
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;

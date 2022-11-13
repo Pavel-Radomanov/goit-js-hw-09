@@ -13,10 +13,10 @@ function createPromise(position, delay) {
     setTimeout(() => {
       if (shouldResolve) {
         resolve("Success! Value passed to resolve function");
-        Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+        Notiflix.Notify.success(`Fulfilled promise ${position+1} in ${delay}ms`);
       } else {
         reject("Error! Error passed to reject function");
-        Notiflix.Notify.failure(`Rejected promise  ${position} in ${delay}ms`);
+        Notiflix.Notify.failure(`Rejected promise  ${position+1} in ${delay}ms`);
       }
     }, delay);
   })
